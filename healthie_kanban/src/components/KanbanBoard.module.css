@@ -1,0 +1,18 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: 700;
+  color: #172b4d;
+  margin: 0 0 20px 0;
+}
+
+.board {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}

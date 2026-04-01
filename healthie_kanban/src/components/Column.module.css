@@ -1,0 +1,56 @@
+.column {
+  flex: 1;
+  min-width: 280px;
+  max-width: 360px;
+  background: #f4f5f7;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.15s ease;
+}
+
+.column.over {
+  background: #e8f0fe;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #5e6c84;
+}
+
+.count {
+  background: #dfe1e6;
+  color: #5e6c84;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-height: 60px;
+}
+
+.empty {
+  color: #a5adba;
+  font-size: 13px;
+  text-align: center;
+  margin: 20px 0;
+}
