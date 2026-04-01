@@ -114,10 +114,25 @@ export function KanbanBoard() {
     [state, reorder]
   );
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleAdd = useCallback(
+    (title: string, character: Parameters<typeof addTask>[1]) => {
+      addTask(title, character);
+      setModalOpen(false);
+    },
+    [addTask]
+  );
+
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>Kanban Board</h1>
-      <TaskForm onAdd={addTask} />
+      <div className={styles.topBar}>
+        <h1 className={styles.heading}>Kanban Board</h1>
+        <button className={styles.createButton} onClick={() => setModalOpen(true)}>
+          + Create Task
+        </button>
+      </div>
+      {modalOpen && <TaskForm onAdd={handleAdd} onClose={() => setModalOpen(false)} />}
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}

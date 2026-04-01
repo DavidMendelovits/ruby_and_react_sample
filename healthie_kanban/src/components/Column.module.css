@@ -1,55 +1,52 @@
 .column {
-  flex: 1;
-  min-width: 280px;
-  max-width: 360px;
-  background: #f4f5f7;
-  border-radius: 10px;
-  padding: 12px;
+  flex: 1 0 280px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   transition: background 0.15s ease;
 }
 
 .column.over {
-  background: #e8f0fe;
+  background: rgba(94, 106, 210, 0.06);
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
-  padding: 0 4px;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .title {
   margin: 0;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #5e6c84;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .count {
-  background: #dfe1e6;
-  color: #5e6c84;
+  color: rgba(255, 255, 255, 0.3);
   font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 10px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 .tasks {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   flex: 1;
   min-height: 60px;
+  padding: 6px;
 }
 
 .empty {
-  color: #a5adba;
+  color: rgba(255, 255, 255, 0.15);
   font-size: 13px;
   text-align: center;
   margin: 20px 0;
