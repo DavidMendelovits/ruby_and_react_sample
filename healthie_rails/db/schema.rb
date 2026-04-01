@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_175321) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_01_175322) do
   create_table "clients", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "email"
-    t.string "name"
+    t.string "email", null: false
+    t.string "name", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_clients_on_email", unique: true
   end
 
   create_table "journal_entries", force: :cascade do |t|
@@ -35,13 +36,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_175321) do
     t.index ["client_id"], name: "index_provider_clients_on_client_id"
     t.index ["provider_id", "client_id"], name: "index_provider_clients_on_provider_id_and_client_id", unique: true
     t.index ["provider_id"], name: "index_provider_clients_on_provider_id"
+    t.check_constraint "plan IN ('basic', 'premium')", name: "chk_provider_clients_plan"
   end
 
   create_table "providers", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "email"
-    t.string "name"
+    t.string "email", null: false
+    t.string "name", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_providers_on_email", unique: true
   end
 
   add_foreign_key "journal_entries", "clients"

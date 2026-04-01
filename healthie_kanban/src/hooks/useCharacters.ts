@@ -70,6 +70,12 @@ export function useCharacters() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  // Refs for current values so loadMore always reads fresh state
+  const pageRef = useRef(page);
+  pageRef.current = page;
+  const searchRef = useRef(search);
+  searchRef.current = search;
+
   // Abort controller for cancelling stale requests
   const abortRef = useRef<AbortController | null>(null);
   // Guard against concurrent loadMore calls
@@ -117,9 +123,9 @@ export function useCharacters() {
     setLoadingMore(true);
 
     const controller = new AbortController();
-    const nextPage = page + 1;
+    const nextPage = pageRef.current + 1;
 
-    fetchPage(nextPage, search, controller.signal)
+    fetchPage(nextPage, searchRef.current, controller.signal)
       .then(({ results, hasNext }) => {
         if (controller.signal.aborted) return;
         setCharacters((prev) => [...prev, ...results]);
@@ -137,7 +143,7 @@ export function useCharacters() {
         loadingMoreRef.current = false;
         if (!controller.signal.aborted) setLoadingMore(false);
       });
-  }, [hasMore, page, search]);
+  }, [hasMore]);
 
   return { characters, loading, loadingMore, error, search, setSearch, loadMore, hasMore };
 }

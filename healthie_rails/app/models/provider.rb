@@ -4,6 +4,7 @@ class Provider < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def client_journal_entries
     JournalEntry.joins(client: :provider_clients)

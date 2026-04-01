@@ -18,7 +18,7 @@ export function TaskCard({ task }: TaskCardProps) {
   };
 
   return (
-    <div ref={setNodeRef} style={style} className={styles.card} {...attributes} {...listeners}>
+    <div ref={setNodeRef} style={style} role="listitem" className={styles.card} {...attributes} {...listeners}>
       <img src={task.character.image} alt={task.character.name} className={styles.avatar} />
       <div className={styles.content}>
         <p className={styles.title}>{task.title}</p>

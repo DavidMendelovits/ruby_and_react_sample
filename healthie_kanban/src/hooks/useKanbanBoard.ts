@@ -7,13 +7,11 @@ const initialState: KanbanState = {
   done: [],
 };
 
-let nextId = 1;
-
 export function kanbanReducer(state: KanbanState, action: KanbanAction): KanbanState {
   switch (action.type) {
     case "ADD_TASK": {
       const task = {
-        id: String(nextId++),
+        id: crypto.randomUUID(),
         title: action.payload.title,
         character: action.payload.character,
       };

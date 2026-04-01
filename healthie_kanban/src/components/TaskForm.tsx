@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import type { Character } from "../types";
 import { useCharacters } from "../hooks/useCharacters";
 import styles from "./TaskForm.module.css";
@@ -13,6 +13,18 @@ export function TaskForm({ onAdd }: TaskFormProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { characters, loading, loadingMore, error, search, setSearch, loadMore, hasMore } = useCharacters();
   const listRef = useRef<HTMLDivElement>(null);
+  const pickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [dropdownOpen]);
 
   const handleScroll = useCallback(() => {
     const el = listRef.current;
@@ -46,10 +58,11 @@ export function TaskForm({ onAdd }: TaskFormProps) {
         className={styles.input}
       />
 
-      <div className={styles.characterPicker}>
+      <div ref={pickerRef} className={styles.characterPicker}>
         <button
           type="button"
           onClick={() => setDropdownOpen(!dropdownOpen)}
+          aria-expanded={dropdownOpen}
           className={styles.pickerButton}
         >
           {selectedCharacter ? (
@@ -72,7 +85,7 @@ export function TaskForm({ onAdd }: TaskFormProps) {
               className={styles.searchInput}
               autoFocus
             />
-            <div ref={listRef} onScroll={handleScroll} className={styles.characterList}>
+            <div ref={listRef} onScroll={handleScroll} role="listbox" className={styles.characterList}>
               {loading && <div className={styles.searchingOverlay}>Searching...</div>}
               {error && <div className={styles.errorOverlay}>{error}</div>}
               {!loading && !error && characters.length === 0 && (
@@ -82,6 +95,7 @@ export function TaskForm({ onAdd }: TaskFormProps) {
                 <button
                   key={char.id}
                   type="button"
+                  role="option"
                   onClick={() => selectCharacter(char)}
                   className={`${styles.characterOption} ${loading ? styles.stale : ""}`}
                 >

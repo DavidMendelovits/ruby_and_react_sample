@@ -19,7 +19,7 @@ export function Column({ id, title, tasks }: ColumnProps) {
         <h2 className={styles.title}>{title}</h2>
         <span className={styles.count}>{tasks.length}</span>
       </div>
-      <div ref={setNodeRef} className={styles.tasks}>
+      <div ref={setNodeRef} role="list" aria-label={title} className={styles.tasks}>
         <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
           {tasks.map((task) => (
             <TaskCard key={task.id} task={task} />

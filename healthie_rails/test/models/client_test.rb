@@ -38,7 +38,7 @@ class ClientTest < ActiveSupport::TestCase
     old = JournalEntry.create!(client: client, body: "Old", created_at: 2.days.ago)
     recent = JournalEntry.create!(client: client, body: "Recent", created_at: 1.hour.ago)
 
-    assert_equal recent, client.journal_entries.first
-    assert_equal old, client.journal_entries.last
+    assert_equal recent, client.journal_entries.recent.first
+    assert_equal old, client.journal_entries.recent.last
   end
 end
