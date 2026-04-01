@@ -11,7 +11,7 @@ import {
   type DragOverEvent,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import confetti from "canvas-confetti";
 import type { ColumnId, Task } from "../types";
 import { COLUMNS } from "../types";
@@ -33,6 +33,7 @@ function findTaskColumn(state: Record<ColumnId, Task[]>, taskId: string): Column
 export function KanbanBoard() {
   const { state, addTask, moveTask, reorder } = useKanbanBoard();
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+  const dragOriginRef = useRef<ColumnId | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -45,7 +46,10 @@ export function KanbanBoard() {
       const column = findTaskColumn(state, String(active.id));
       if (column) {
         const task = state[column].find((t) => t.id === String(active.id));
-        if (task) setActiveTask(task);
+        if (task) {
+          setActiveTask(task);
+          dragOriginRef.current = column;
+        }
       }
     },
     [state]
@@ -95,18 +99,17 @@ export function KanbanBoard() {
         if (oldIndex !== newIndex && newIndex >= 0) {
           reorder(activeColumn, oldIndex, newIndex);
         }
-      } else {
-        // Cross-column move was handled in dragOver
-        // Check if dropped into "done" for confetti
-        if (overColumn === "done") {
-          confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
-          });
-        }
       }
 
+      // Fire confetti when a task is newly moved to "done"
+      if (overColumn === "done" && dragOriginRef.current !== "done") {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+      }
+      dragOriginRef.current = null;
     },
     [state, reorder]
   );
