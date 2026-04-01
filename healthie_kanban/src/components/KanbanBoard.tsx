@@ -9,7 +9,6 @@ import {
   type DragEndEvent,
   type DragOverEvent,
 } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
 import { useState, useCallback } from "react";
 import confetti from "canvas-confetti";
 import type { ColumnId, Task } from "../types";
@@ -105,10 +104,6 @@ export function KanbanBoard() {
         }
       }
 
-      // Also fire confetti if reordering within "done" and item was just moved there
-      if (activeColumn !== overColumn && overColumn === "done") {
-        // Already handled above
-      }
     },
     [state, reorder]
   );
