@@ -1,18 +1,44 @@
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 24px 32px;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .heading {
-  font-size: 24px;
-  font-weight: 700;
-  color: #172b4d;
-  margin: 0 0 20px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #e8e8ed;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.createButton {
+  padding: 7px 14px;
+  background: #5e6ad2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.createButton:hover {
+  background: #6c78e0;
 }
 
 .board {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 8px;
 }

@@ -1,58 +1,136 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal {
+  width: 480px;
+  background: #1c1c24;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.15s ease;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #e8e8ed;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.1s;
+}
+
+.closeButton:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .form {
   display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  padding: 16px 20px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  margin-bottom: 24px;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .input {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #dfe1e6;
-  border-radius: 6px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   font-size: 14px;
   outline: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: #e8e8ed;
   transition: border-color 0.15s;
 }
 
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
 .input:focus {
-  border-color: #4c9aff;
+  border-color: rgba(94, 106, 210, 0.6);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .characterPicker {
   position: relative;
-  min-width: 200px;
 }
 
 .pickerButton {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #dfe1e6;
-  border-radius: 6px;
-  background: #fff;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
   font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   text-align: left;
   transition: border-color 0.15s;
 }
 
 .pickerButton:hover {
-  border-color: #4c9aff;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .selectedChar {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .miniAvatar {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -62,10 +140,10 @@
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  background: #fff;
-  border: 1px solid #dfe1e6;
+  background: #1c1c24;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   z-index: 100;
   overflow: hidden;
 }
@@ -74,10 +152,16 @@
   width: 100%;
   padding: 10px 12px;
   border: none;
-  border-bottom: 1px solid #f0f0f0;
-  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13px;
   outline: none;
   box-sizing: border-box;
+  background: transparent;
+  color: #e8e8ed;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .characterList {
@@ -91,9 +175,9 @@
   top: 0;
   z-index: 1;
   text-align: center;
-  padding: 6px;
-  background: rgba(76, 154, 255, 0.08);
-  color: #4c9aff;
+  padding: 4px;
+  background: rgba(94, 106, 210, 0.1);
+  color: #8b8ff5;
   font-size: 12px;
   font-weight: 500;
 }
@@ -108,9 +192,9 @@
   top: 0;
   z-index: 1;
   text-align: center;
-  padding: 6px;
-  background: rgba(255, 86, 48, 0.08);
-  color: #de350b;
+  padding: 4px;
+  background: rgba(235, 87, 87, 0.1);
+  color: #eb5757;
   font-size: 12px;
   font-weight: 500;
 }
@@ -125,59 +209,85 @@
   background: none;
   cursor: pointer;
   font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
   text-align: left;
   transition: background 0.1s;
 }
 
 .characterOption:hover {
-  background: #f4f5f7;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .status {
   margin-left: auto;
   font-size: 11px;
-  color: #999;
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .loadingText {
   text-align: center;
-  padding: 10px;
-  color: #999;
-  font-size: 13px;
+  padding: 8px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 12px;
 }
 
 .loadMoreBtn {
   width: 100%;
-  padding: 8px;
+  padding: 6px;
   border: none;
-  background: #f4f5f7;
-  color: #4c9aff;
-  font-size: 13px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #8b8ff5;
+  font-size: 12px;
   cursor: pointer;
 }
 
 .loadMoreBtn:hover {
-  background: #e8f0fe;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 16px;
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.6);
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .submitButton {
-  padding: 8px 20px;
-  background: #4c9aff;
+  padding: 8px 16px;
+  background: #5e6ad2;
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  white-space: nowrap;
   transition: background 0.15s;
 }
 
 .submitButton:hover:not(:disabled) {
-  background: #2684ff;
+  background: #6c78e0;
 }
 
 .submitButton:disabled {
-  opacity: 0.5;
+  opacity: 0.35;
   cursor: not-allowed;
 }
