@@ -1,7 +1,8 @@
-import { useReducer, useCallback } from "react";
+import { useReducer, useCallback, useEffect } from "react";
 import type { KanbanState, KanbanAction, ColumnId, Character } from "../types";
+import { localStorageAdapter, type StorageAdapter } from "../storage";
 
-const initialState: KanbanState = {
+const emptyState: KanbanState = {
   todo: [],
   doing: [],
   done: [],
@@ -46,8 +47,12 @@ export function kanbanReducer(state: KanbanState, action: KanbanAction): KanbanS
   }
 }
 
-export function useKanbanBoard() {
-  const [state, dispatch] = useReducer(kanbanReducer, initialState);
+export function useKanbanBoard(storage: StorageAdapter = localStorageAdapter) {
+  const [state, dispatch] = useReducer(kanbanReducer, null, () => storage.load() ?? emptyState);
+
+  useEffect(() => {
+    storage.save(state);
+  }, [state, storage]);
 
   const addTask = useCallback(
     (title: string, character: Character) => {
