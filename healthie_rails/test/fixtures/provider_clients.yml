@@ -3,9 +3,9 @@
 one:
   provider: one
   client: one
-  plan: MyString
+  plan: basic
 
 two:
   provider: two
   client: two
-  plan: MyString
+  plan: premium

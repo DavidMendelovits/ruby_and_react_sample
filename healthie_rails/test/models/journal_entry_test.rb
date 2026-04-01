@@ -21,12 +21,12 @@ class JournalEntryTest < ActiveSupport::TestCase
     assert_equal @client, entry.client
   end
 
-  test "default scope orders by created_at desc" do
+  test "recent scope orders by created_at desc" do
     old = JournalEntry.create!(client: @client, body: "Old", created_at: 3.days.ago)
     mid = JournalEntry.create!(client: @client, body: "Mid", created_at: 1.day.ago)
     recent = JournalEntry.create!(client: @client, body: "Recent", created_at: 1.hour.ago)
 
-    entries = @client.journal_entries
+    entries = @client.journal_entries.recent
     assert_equal [recent, mid, old], entries.to_a
   end
 end
