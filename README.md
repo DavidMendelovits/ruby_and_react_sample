@@ -1,6 +1,4 @@
-# Healthie Tech Interview
-
-## Session 1: Rails Data Model
+## Rails Data Model
 
 ### Setup
 
@@ -50,7 +48,7 @@ rails test
 
 ---
 
-## Session 2: React Kanban Board
+## React Kanban Board
 
 ### Setup
 
