@@ -42,4 +42,29 @@ class ProviderTest < ActiveSupport::TestCase
     assert_equal new_entry, entries.first
     assert_equal old_entry, entries.last
   end
+
+  test "client_journal_entries includes archived entries by default" do
+    provider = Provider.create!(name: "Dr. Test", email: "prov@example.com")
+    client = Client.create!(name: "C1", email: "cl@example.com")
+    ProviderClient.create!(provider: provider, client: client, plan: :basic)
+
+    JournalEntry.create!(client: client, body: "Active")
+    JournalEntry.create!(client: client, body: "Archived", archived_at: 1.day.ago)
+
+    entries = provider.client_journal_entries
+    assert_equal 2, entries.count
+  end
+
+  test "client_journal_entries with include_archived false excludes archived" do
+    provider = Provider.create!(name: "Dr. Test", email: "prov2@example.com")
+    client = Client.create!(name: "C1", email: "cl2@example.com")
+    ProviderClient.create!(provider: provider, client: client, plan: :basic)
+
+    active = JournalEntry.create!(client: client, body: "Active")
+    JournalEntry.create!(client: client, body: "Archived", archived_at: 1.day.ago)
+
+    entries = provider.client_journal_entries(include_archived: false)
+    assert_equal 1, entries.count
+    assert_equal active, entries.first
+  end
 end
