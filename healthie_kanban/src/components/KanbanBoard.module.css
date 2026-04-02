@@ -35,10 +35,65 @@
   background: #6c78e0;
 }
 
+.undoRedoGroup {
+  display: flex;
+  gap: 4px;
+}
+
+.undoRedoButton {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.undoRedoButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8e8ed;
+}
+
+.undoRedoButton:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
 .board {
   display: flex;
   gap: 12px;
   align-items: flex-start;
   overflow-x: auto;
   padding-bottom: 8px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  color: #e8e8ed;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  animation: toastIn 0.2s ease;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
