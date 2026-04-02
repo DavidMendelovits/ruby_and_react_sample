@@ -6,9 +6,10 @@ class Provider < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  def client_journal_entries
-    JournalEntry.joins(client: :provider_clients)
-                .where(provider_clients: { provider_id: id })
-                .order(created_at: :desc)
+  def client_journal_entries(include_archived: true)
+    scope = JournalEntry.joins(client: :provider_clients)
+                        .where(provider_clients: { provider_id: id })
+    scope = scope.active unless include_archived
+    scope.order(created_at: :desc)
   end
 end

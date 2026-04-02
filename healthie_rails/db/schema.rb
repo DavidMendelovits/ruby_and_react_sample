@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_175322) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_02_172701) do
   create_table "clients", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", null: false
@@ -20,10 +20,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_175322) do
   end
 
   create_table "journal_entries", force: :cascade do |t|
+    t.datetime "archived_at"
     t.text "body"
     t.integer "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["archived_at"], name: "index_journal_entries_on_archived_at"
     t.index ["client_id"], name: "index_journal_entries_on_client_id"
   end
 
