@@ -1,6 +1,7 @@
-import { useReducer, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import type { KanbanState, KanbanAction, ColumnId, Character } from "../types";
 import { localStorageAdapter, type StorageAdapter } from "../storage";
+import { useUndoRedo } from "./useUndoRedo";
 
 const emptyState: KanbanState = {
   todo: [],
@@ -48,7 +49,17 @@ export function kanbanReducer(state: KanbanState, action: KanbanAction): KanbanS
 }
 
 export function useKanbanBoard(storage: StorageAdapter = localStorageAdapter) {
-  const [state, dispatch] = useReducer(kanbanReducer, null, () => storage.load() ?? emptyState);
+  const {
+    state,
+    dispatch,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+    saveCheckpoint,
+    commitCheckpoint,
+    discardCheckpoint,
+  } = useUndoRedo(kanbanReducer, storage.load() ?? emptyState);
 
   useEffect(() => {
     storage.save(state);
@@ -58,22 +69,34 @@ export function useKanbanBoard(storage: StorageAdapter = localStorageAdapter) {
     (title: string, character: Character) => {
       dispatch({ type: "ADD_TASK", payload: { title, character } });
     },
-    []
+    [dispatch]
   );
 
   const moveTask = useCallback(
     (taskId: string, from: ColumnId, to: ColumnId, toIndex: number) => {
       dispatch({ type: "MOVE_TASK", payload: { taskId, from, to, toIndex } });
     },
-    []
+    [dispatch]
   );
 
   const reorder = useCallback(
     (column: ColumnId, fromIndex: number, toIndex: number) => {
       dispatch({ type: "REORDER", payload: { column, fromIndex, toIndex } });
     },
-    []
+    [dispatch]
   );
 
-  return { state, addTask, moveTask, reorder };
+  return {
+    state,
+    addTask,
+    moveTask,
+    reorder,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+    saveCheckpoint,
+    commitCheckpoint,
+    discardCheckpoint,
+  };
 }
