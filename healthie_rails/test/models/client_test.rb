@@ -27,16 +27,20 @@ class ClientTest < ActiveSupport::TestCase
 
   test "has many journal entries" do
     client = Client.create!(name: "Test", email: "test@example.com")
-    JournalEntry.create!(client: client, body: "Entry 1")
-    JournalEntry.create!(client: client, body: "Entry 2")
+    provider = Provider.create!(name: "Dr. Test", email: "drtest@example.com")
+    ProviderClient.create!(provider: provider, client: client, plan: :basic)
+    JournalEntry.create!(client: client, provider: provider, body: "Entry 1")
+    JournalEntry.create!(client: client, provider: provider, body: "Entry 2")
 
     assert_equal 2, client.journal_entries.count
   end
 
   test "journal entries sorted by date descending" do
     client = Client.create!(name: "Test", email: "test@example.com")
-    old = JournalEntry.create!(client: client, body: "Old", created_at: 2.days.ago)
-    recent = JournalEntry.create!(client: client, body: "Recent", created_at: 1.hour.ago)
+    provider = Provider.create!(name: "Dr. Test", email: "drtest@example.com")
+    ProviderClient.create!(provider: provider, client: client, plan: :basic)
+    old = JournalEntry.create!(client: client, provider: provider, body: "Old", created_at: 2.days.ago)
+    recent = JournalEntry.create!(client: client, provider: provider, body: "Recent", created_at: 1.hour.ago)
 
     assert_equal recent, client.journal_entries.recent.first
     assert_equal old, client.journal_entries.recent.last
