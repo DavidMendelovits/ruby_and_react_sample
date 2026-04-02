@@ -34,8 +34,8 @@ class ProviderTest < ActiveSupport::TestCase
     ProviderClient.create!(provider: provider, client: client1, plan: :basic)
     ProviderClient.create!(provider: provider, client: client2, plan: :premium)
 
-    old_entry = JournalEntry.create!(client: client1, body: "Old entry", created_at: 2.days.ago)
-    new_entry = JournalEntry.create!(client: client2, body: "New entry", created_at: 1.hour.ago)
+    old_entry = JournalEntry.create!(client: client1, provider: provider, body: "Old entry", created_at: 2.days.ago)
+    new_entry = JournalEntry.create!(client: client2, provider: provider, body: "New entry", created_at: 1.hour.ago)
 
     entries = provider.client_journal_entries
     assert_equal 2, entries.count

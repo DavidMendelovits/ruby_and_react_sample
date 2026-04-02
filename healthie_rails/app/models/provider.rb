@@ -1,6 +1,7 @@
 class Provider < ApplicationRecord
   has_many :provider_clients, dependent: :destroy
   has_many :clients, through: :provider_clients
+  has_many :journal_entries, dependent: :destroy
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true

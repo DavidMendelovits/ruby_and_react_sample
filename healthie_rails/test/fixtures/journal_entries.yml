@@ -2,8 +2,10 @@
 
 one:
   client: one
+  provider: one
   body: MyText
 
 two:
   client: two
+  provider: two
   body: MyText
